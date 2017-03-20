@@ -17,7 +17,7 @@ global violence
 percent = 5
 violence = False
 Config = ConfigParser.ConfigParser()
-Config.read("/config")
+Config.read('/config/config.ini')
 key = Config.get('Main', 'key')
 url = Config.get('Main', 'url')
 master = Config.get('Main', 'master')
@@ -76,4 +76,4 @@ def fun(message):
     return 'ok'
 
 if __name__ == '__main__':
-    app.run(port=7777, debug=True)
+    app.run(port=80, debug=True)
