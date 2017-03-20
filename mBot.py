@@ -2,8 +2,10 @@ from cobe.brain import Brain
 from flask import Flask, request
 import telebot, logging
 from random import randint
-from config import *
+import ConfigParser
+
 app = Flask(__name__)
+
 
 global bot
 bot = telebot.TeleBot(key)
@@ -14,6 +16,13 @@ global percent
 global violence
 percent = 5
 violence = False
+Config = ConfigParser.ConfigParser()
+Config.read("/config")
+key = Config.get('Main', 'key')
+url = Config.get('Main', 'url')
+master = Config.get('Main', 'master')
+
+
 @app.route(url, methods=['GET', 'POST'])
 def hook():
     if request.method == "POST":
@@ -54,7 +63,7 @@ def setfun(message):
 @bot.message_handler(func=lambda message: True)
 def fun(message):
     print message.text
-    brain = Brain("./db/" + str(message.chat.id)[1:] + ".br")
+    brain = Brain("/db/" + str(message.chat.id)[1:] + ".br")
     # Telegram understands UTF-8, so encode text for unicode compatibility
     brain.learn(message.text)
     if "tagueul" in message.text.lower() or "tg" in message.text.lower() or "ta gueule" in message.text.lower():
