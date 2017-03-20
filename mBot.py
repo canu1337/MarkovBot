@@ -6,7 +6,11 @@ import ConfigParser
 
 app = Flask(__name__)
 
-
+Config = ConfigParser.ConfigParser()
+Config.read('/config/config.ini')
+key = Config.get('Main', 'key')
+url = Config.get('Main', 'url')
+master = Config.get('Main', 'master')
 global bot
 bot = telebot.TeleBot(key)
 logger = telebot.logger
@@ -16,12 +20,6 @@ global percent
 global violence
 percent = 5
 violence = False
-Config = ConfigParser.ConfigParser()
-Config.read('/config/config.ini')
-key = Config.get('Main', 'key')
-url = Config.get('Main', 'url')
-master = Config.get('Main', 'master')
-
 
 @app.route(url, methods=['GET', 'POST'])
 def hook():
